@@ -1,86 +1,100 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using WebApp.Models;
 using WebApp.Repositories;
 
-namespace WebApp.Controllers
+namespace WebsiteBanHang.Controllers
 {
     public class CategoryController : Controller
     {
-            private readonly ICategoryRepository _categoryRepository;
-            public CategoryController(ICategoryRepository categoryRepository)
+        private readonly IProductRepository _productRepository;
+        private readonly ICategoryRepository _categoryRepository;
+
+        public CategoryController(IProductRepository productRepository, ICategoryRepository categoryRepository)
+        {
+            _productRepository = productRepository;
+            _categoryRepository = categoryRepository;
+        }
+
+        public async Task<IActionResult> Index()
+        {
+            var category = await _categoryRepository.GetAllAsync();
+            return View(category);
+        }
+
+        public async Task<IActionResult> Display(int id)
+        {
+            var category = await _categoryRepository.GetByIdAsync(id);
+            if (category == null)
             {
-                _categoryRepository = categoryRepository;
+                return NotFound();
             }
-            public IActionResult Add()
+            return View(category);
+        }
+
+        public IActionResult Add()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Add(Category category)
+        {
+            if (ModelState.IsValid)
             {
-                return View();
+                await _categoryRepository.AddAsync(category);
+                return RedirectToAction(nameof(Index));
             }
-            [HttpPost]
-            public IActionResult Add(Category category)
+            return View(category);
+        }
+
+        public async Task<IActionResult> Update(int id)
+        {
+            var category = await _categoryRepository.GetByIdAsync(id);
+            if (category == null)
             {
-                if (ModelState.IsValid)
-                {
-                    _categoryRepository.Add(category);
-                    return RedirectToAction("Index"); // Chuyển hướng tới trang
-                }
-                return View(category);
+                return NotFound();
             }
-            // Các actions khác như Display, Update, Delete
-            // Display a list of products
-            public IActionResult Index()
+            return View(category);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Update(int id, Category category)
+        {
+            if (id != category.Id)
             {
-                var categories = _categoryRepository.GetAll();
-                return View(categories);
+                return NotFound();
             }
 
-            // Display a single product
-            public IActionResult Display(int id)
+            if (ModelState.IsValid)
             {
-                var product = _categoryRepository.GetById(id);
-                if (product == null)
-                {
-                    return NotFound();
-                }
-                return View(product);
+                // FIX: Thêm từ khóa await ở đây
+                await _categoryRepository.UpdateAsync(category);
+                return RedirectToAction(nameof(Index));
             }
-            // Show the product update form
-            public IActionResult Update(int id)
+            return View(category);
+        }
+
+        public async Task<IActionResult> Delete(int id)
+        {
+            var category = await _categoryRepository.GetByIdAsync(id);
+            if (category == null)
             {
-                var category = _categoryRepository.GetById(id);
-                if (category == null)
-                {
-                    return NotFound();
-                }
-                return View(category);
+                return NotFound();
             }
-            // Process the product update
-            [HttpPost]
-            public IActionResult Update(Category category)
+            return View(category);
+        }
+
+        // FIX: Đổi ActionName thành đúng tên bạn muốn map ở View (thường là "Delete")
+        [HttpPost, ActionName("DeleteConfirmed")]
+        public async Task<IActionResult> DeleteConfirmed(int id)
+        {
+            var category = await _categoryRepository.GetByIdAsync(id);
+            if (category != null)
             {
-                if (ModelState.IsValid)
-                {
-                _categoryRepository.Update(category);
-                    return RedirectToAction("Index");
-                }
-                return View(category);
+                // FIX: Thêm từ khóa await ở đây
+                await _categoryRepository.DeleteAsync(id);
             }
-            // Show the product delete confirmation
-            public IActionResult Delete(int id)
-            {
-                var product = _categoryRepository.GetById(id);
-                if (product == null)
-                {
-                    return NotFound();
-                }
-                return View(product);
-            }
-            // Process the product deletion
-            [HttpPost, ActionName("DeleteConfirmed")]
-            public IActionResult DeleteConfirmed(int id)
-            {
-            _categoryRepository.Delete(id);
-                return RedirectToAction("Index");
-            }
+            return RedirectToAction(nameof(Index));
         }
     }
+}

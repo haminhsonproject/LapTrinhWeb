@@ -1,61 +1,79 @@
 ﻿@model WebApp.Models.Product
+@using Microsoft.AspNetCore.Mvc.Rendering
+@{
+    ViewData["Title"] = "Edit Product";
+}
 
-<div class="container mt-4">
-    <div class="d-flex justify-content-between align-items-center mb-3">
-        <h2 class="fw-bold">✏️ Edit Product</h2>
-        <a asp-action="Index" class="btn btn-outline-secondary">
-            <i class="bi bi-arrow-left me-1"></i> Back to List
-        </a>
+<h2>Edit Product</h2>
+
+<div class="row">
+    <div class="col-md-8">
+        <form asp-action="Update" method="post" enctype="multipart/form-data">
+            <input type="hidden" asp-for="Id" />
+
+            <div class="form-group mb-3">
+                <label asp-for="Name" class="form-label"></label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+
+            <div class="form-group mb-3">
+                <label asp-for="Price" class="form-label"></label>
+                <input asp-for="Price" class="form-control" />
+                <span asp-validation-for="Price" class="text-danger"></span>
+            </div>
+
+            <div class="form-group mb-3">
+                <label asp-for="Description" class="form-label"></label>
+                <textarea asp-for="Description" class="form-control" rows="3"></textarea>
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
+
+            <div class="form-group mb-3">
+                <label asp-for="CategoryId" class="form-label">Category</label>
+                <select asp-for="CategoryId" asp-items="@ViewBag.Categories" class="form-control"></select>
+                <span asp-validation-for="CategoryId" class="text-danger"></span>
+            </div>
+
+            <div class="form-group mb-4">
+                <label class="form-label">Product Image</label>
+                <input type="file" name="imageUrl" class="form-control" id="imageInput" />
+            </div>
+
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+                <a asp-action="Index" class="btn btn-secondary">Back to List</a>
+            </div>
+        </form>
     </div>
 
-    <div class="card shadow-sm">
-        <div class="card-body">
-            <form asp-action="Update" enctype="multipart/form-data">
-                <input type="hidden" asp-for="Id" />
-
-                <div class="mb-3">
-                    <label asp-for="Name" class="form-label fw-semibold"></label>
-                    <input asp-for="Name" class="form-control" />
-                    <span asp-validation-for="Name" class="text-danger small"></span>
-                </div>
-
-                <div class="mb-3">
-                    <label asp-for="Price" class="form-label fw-semibold"></label>
-                    <div class="input-group">
-                        <span class="input-group-text">$</span>
-                        <input asp-for="Price" class="form-control" />
-                    </div>
-                    <span asp-validation-for="Price" class="text-danger small"></span>
-                </div>
-
-                <div class="mb-3">
-                    <label asp-for="Description" class="form-label fw-semibold"></label>
-                    <textarea asp-for="Description" class="form-control" rows="3"></textarea>
-                    <span asp-validation-for="Description" class="text-danger small"></span>
-                </div>
-
-                <div class="mb-3">
-                    <label class="form-label fw-semibold">Current Image</label>
-                    @if (!string.IsNullOrEmpty(Model.ImageUrl))
-                    {
-                        <div class="mb-2">
-                            <img src="@Model.ImageUrl" class="img-thumbnail"
-                                 style="max-height: 150px;" />
-                        </div>
-                    }
-                    <input type="hidden" asp-for="ImageUrl" />
-                    <input type="file" name="imageUrl" class="form-control"
-                           accept="image/*" />
-                    <small class="text-muted">Để trống nếu không muốn đổi ảnh</small>
-                </div>
-
-                <div class="d-flex gap-2">
-                    <button type="submit" class="btn btn-primary">
-                        <i class="bi bi-save me-1"></i> Update
-                    </button>
-                    <a asp-action="Index" class="btn btn-outline-secondary">Cancel</a>
-                </div>
-            </form>
-        </div>
+    <div class="col-md-4 text-center">
+        <label class="form-label d-block">Current / Preview Image</label>
+        @if (!string.IsNullOrEmpty(Model?.ImageUrl))
+        {
+            <img src="@Model.ImageUrl" alt="Product Image" class="img-thumbnail" style="max-width: 200px; max-height: 200px;" id="previewImage" />
+        }
+        else
+        {
+            <img src="/images/default-placeholder.png" alt="No Image" class="img-thumbnail" style="max-width: 200px; max-height: 200px;" id="previewImage" />
+        }
     </div>
 </div>
+
+<script>
+    document.querySelectorAll('input[type="file"]').forEach(input => {
+        input.addEventListener('change', function (event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    const img = document.getElementById("previewImage");
+                    if (img) {
+                        img.src = e.target.result;
+                    }
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+    });
+</script>

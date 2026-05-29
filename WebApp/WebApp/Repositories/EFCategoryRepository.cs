@@ -1,0 +1,50 @@
+﻿using Microsoft.EntityFrameworkCore;
+using WebApp.Models;
+using WebApp.Repositories;
+
+namespace WebBanHang.Repositories
+{
+    public class EFCategoryRepository : ICategoryRepository
+    {
+        private readonly Context _context;
+
+        public EFCategoryRepository(Context context)
+        {
+            _context = context;
+        }
+
+        public async Task<IEnumerable<Category>> GetAllAsync()
+        {
+            // Lấy toàn bộ danh sách Category từ CSDL
+            return await _context.Categories.ToListAsync();
+        }
+
+        public async Task<Category?> GetByIdAsync(int id)
+        {
+            // Tìm Category theo ID
+            return await _context.Categories.FindAsync(id);
+        }
+
+        public async Task AddAsync(Category category)
+        {
+            _context.Categories.Add(category);
+            await _context.SaveChangesAsync(); // Lưu xuống CSDL
+        }
+
+        public async Task UpdateAsync(Category category)
+        {
+            _context.Categories.Update(category);
+            await _context.SaveChangesAsync(); // Lưu xuống CSDL
+        }
+
+        public async Task DeleteAsync(int id)
+        {
+            var category = await _context.Categories.FindAsync(id);
+            if (category != null)
+            {
+                _context.Categories.Remove(category);
+                await _context.SaveChangesAsync(); // Lưu xuống CSDL
+            }
+        }
+    }
+}

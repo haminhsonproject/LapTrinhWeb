@@ -1,11 +1,20 @@
+using Microsoft.EntityFrameworkCore;
+using WebApp.Models;
 using WebApp.Repositories;
+using WebBanHang.Repositories;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Services.AddDbContext<Context>(options =>
+options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+builder.Services.AddScoped<IProductRepository, EFProductRepository>();
+builder.Services.AddScoped<ICategoryRepository, EFCategoryRepository>();
+
 // Add services to the container.
 builder.Services.AddControllersWithViews();
-builder.Services.AddSingleton<IProductRepository, MockProductRepository>();
-builder.Services.AddSingleton<ICategoryRepository, MockCategoryRepository>();
+
 
 var app = builder.Build();
 

@@ -1,8 +1,9 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 
 namespace WebApp.Models
 {
-    public class Context : DbContext
+    public class Context : IdentityDbContext
     {
         public
         Context(DbContextOptions<Context> options) :

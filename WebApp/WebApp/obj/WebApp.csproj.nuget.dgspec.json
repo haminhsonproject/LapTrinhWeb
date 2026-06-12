@@ -1,26 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "E:\\LapTrinhWeb\\WebApp\\WebApp\\WebApp.csproj": {}
+    "M:\\LapTrinhWeb\\WebApp\\WebApp\\WebApp.csproj": {}
   },
   "projects": {
-    "E:\\LapTrinhWeb\\WebApp\\WebApp\\WebApp.csproj": {
+    "M:\\LapTrinhWeb\\WebApp\\WebApp\\WebApp.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "E:\\LapTrinhWeb\\WebApp\\WebApp\\WebApp.csproj",
+        "projectUniqueName": "M:\\LapTrinhWeb\\WebApp\\WebApp\\WebApp.csproj",
         "projectName": "WebApp",
-        "projectPath": "E:\\LapTrinhWeb\\WebApp\\WebApp\\WebApp.csproj",
-        "packagesPath": "C:\\Users\\minhb\\.nuget\\packages\\",
-        "outputPath": "E:\\LapTrinhWeb\\WebApp\\WebApp\\obj\\",
+        "projectPath": "M:\\LapTrinhWeb\\WebApp\\WebApp\\WebApp.csproj",
+        "packagesPath": "C:\\Users\\Administrator\\.nuget\\packages\\",
+        "outputPath": "M:\\LapTrinhWeb\\WebApp\\WebApp\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files\\DevExpress 25.2\\Components\\Offline Packages",
-          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
-        ],
         "configFilePaths": [
-          "C:\\Users\\minhb\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\DevExpress 25.2.config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Users\\Administrator\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -28,9 +22,7 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "C:\\Program Files\\DevExpress 25.2\\Components\\System\\Components\\Packages": {},
-          "https://api.nuget.org/v3/index.json": {},
-          "https://nuget.devexpress.com/ko5wXMGK5DfX4tOgY8EJy98hCx2PvlP1GCoZt3uHdlbMeizyxq/api": {}
+          "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
           "net8.0": {
@@ -42,13 +34,7 @@
           "warnAsError": [
             "NU1605"
           ]
-        },
-        "restoreAuditProperties": {
-          "enableAudit": "true",
-          "auditLevel": "low",
-          "auditMode": "direct"
-        },
-        "SdkAnalysisLevel": "10.0.100"
+        }
       },
       "frameworks": {
         "net8.0": {
@@ -104,7 +90,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.103/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.101/PortableRuntimeIdentifierGraph.json"
         }
       }
     }

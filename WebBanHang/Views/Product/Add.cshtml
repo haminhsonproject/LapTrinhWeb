@@ -1,0 +1,47 @@
+@model WebBanHang.Models.Product
+@using Microsoft.AspNetCore.Mvc.Rendering
+@{
+    ViewData["Title"] = "Thêm sản phẩm";
+}
+
+<h2>Thêm sản phẩm</h2>
+
+@if (ViewBag.HasCategories == false)
+{
+    <div class="alert alert-warning">
+        Chưa có danh mục sản phẩm. Bạn cần thêm danh mục trước khi thêm sản phẩm.
+        <a asp-area="Admin" asp-controller="Category" asp-action="Add" class="alert-link">Thêm danh mục ngay</a>
+    </div>
+}
+
+<form asp-action="Add" method="post" enctype="multipart/form-data">
+    <div asp-validation-summary="All" class="text-danger fw-bold"></div>
+    <div class="form-group">
+        <label asp-for="Name"></label>
+        <input asp-for="Name" class="form-control" />
+        <span asp-validation-for="Name" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Price"></label>
+        <input asp-for="Price" class="form-control" />
+        <span asp-validation-for="Price" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Description"></label>
+        <textarea asp-for="Description" class="form-control"></textarea>
+        <span asp-validation-for="Description" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="CategoryId">Danh mục</label>
+        <select asp-for="CategoryId" asp-items="@ViewBag.Categories" class="form-control">
+            <option value="">-- Chọn danh mục --</option>
+        </select>
+        <span asp-validation-for="CategoryId" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="ImageUrl">Hình ảnh</label>
+        <input type="file" name="imageUrl" class="form-control" />
+    </div>
+    <button type="submit" class="btn btn-primary">Thêm</button>
+    <a asp-area="Admin" asp-controller="Category" asp-action="Index" class="btn btn-outline-secondary">Quản lý danh mục</a>
+</form>

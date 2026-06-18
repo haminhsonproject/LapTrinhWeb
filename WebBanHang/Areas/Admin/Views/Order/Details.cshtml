@@ -1,0 +1,60 @@
+@model WebBanHang.Models.Order
+
+@{
+    ViewData["Title"] = "Chi tiết đơn hàng";
+}
+
+<h2>Chi tiết đơn hàng #@Model.Id</h2>
+
+<div class="card mb-3 shadow-sm">
+    <div class="card-body">
+        <p><strong>Khách hàng:</strong> @Model.CustomerName</p>
+        <p><strong>SĐT:</strong> @Model.PhoneNumber</p>
+        <p><strong>Địa chỉ:</strong> @Model.ShippingAddress</p>
+        <p><strong>Ghi chú:</strong> @Model.Note</p>
+        <p><strong>Ngày đặt:</strong> @Model.OrderDate.ToString("dd/MM/yyyy HH:mm")</p>
+        <p><strong>Phương thức:</strong> @Model.PaymentMethod</p>
+        <p><strong>Tổng tiền:</strong> <span class="text-danger fw-bold">@Model.TotalAmount.ToString("#,##0") VNĐ</span></p>
+
+        <form asp-action="UpdateStatus" method="post" class="row g-2 align-items-end">
+            @Html.AntiForgeryToken()
+            <input type="hidden" name="id" value="@Model.Id" />
+            <div class="col-md-4">
+                <label class="form-label">Trạng thái</label>
+                <select name="status" class="form-select">
+                    <option value="Chờ xử lý" selected='@(Model.Status == "Chờ xử lý" ? "selected" : null)'>Chờ xử lý</option>
+                    <option value="Đang giao" selected='@(Model.Status == "Đang giao" ? "selected" : null)'>Đang giao</option>
+                    <option value="Hoàn thành" selected='@(Model.Status == "Hoàn thành" ? "selected" : null)'>Hoàn thành</option>
+                    <option value="Đã hủy" selected='@(Model.Status == "Đã hủy" ? "selected" : null)'>Đã hủy</option>
+                </select>
+            </div>
+            <div class="col-md-3">
+                <button type="submit" class="btn btn-success">Cập nhật</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<table class="table table-bordered bg-white shadow-sm">
+    <thead class="table-light">
+        <tr>
+            <th>Sản phẩm</th>
+            <th>Giá</th>
+            <th>Số lượng</th>
+            <th>Thành tiền</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.OrderDetails)
+        {
+            <tr>
+                <td>@item.ProductName</td>
+                <td>@item.Price.ToString("#,##0") VNĐ</td>
+                <td>@item.Quantity</td>
+                <td class="text-danger fw-bold">@((item.Price * item.Quantity).ToString("#,##0")) VNĐ</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<a asp-action="Index" class="btn btn-secondary">Quay lại</a>

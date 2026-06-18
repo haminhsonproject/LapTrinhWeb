@@ -1,0 +1,25 @@
+@model WebBanHang.Models.Category
+
+@{
+    ViewData["Title"] = "Sửa danh mục";
+}
+
+<h2>Sửa danh mục</h2>
+
+<form asp-area="Admin" asp-controller="Category" asp-action="Update" asp-route-id="@Model.Id" method="post" class="bg-white p-4 rounded shadow-sm" style="max-width: 520px;">
+    <input asp-for="Id" type="hidden" />
+    <div asp-validation-summary="All" class="text-danger"></div>
+
+    <div class="mb-3">
+        <label asp-for="Name" class="form-label">Tên danh mục</label>
+        <input asp-for="Name" class="form-control" />
+        <span asp-validation-for="Name" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Cập nhật</button>
+    <a asp-area="Admin" asp-controller="Category" asp-action="Index" class="btn btn-secondary">Quay lại</a>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

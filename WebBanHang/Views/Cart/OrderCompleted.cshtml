@@ -1,0 +1,15 @@
+@model WebBanHang.Models.Order
+
+@{
+    ViewData["Title"] = "Đặt hàng thành công";
+}
+
+<div class="alert alert-success mt-4 shadow-sm">
+    <h3 class="fw-bold">✅ Đặt hàng thành công!</h3>
+    <p class="mb-1">Mã đơn hàng của bạn: <strong>#@Model.Id</strong></p>
+    <p class="mb-1">Trạng thái: <strong>@Model.Status</strong></p>
+    <p class="mb-0">Tổng tiền: <strong class="text-brand">@Model.TotalAmount.ToString("#,##0") VNĐ</strong></p>
+</div>
+
+<a asp-controller="Home" asp-action="Index" class="btn btn-primary">Về trang chủ</a>
+<a asp-controller="Product" asp-action="Index" class="btn btn-secondary">Tiếp tục mua sắm</a>

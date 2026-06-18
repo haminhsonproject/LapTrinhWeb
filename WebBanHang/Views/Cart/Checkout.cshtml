@@ -1,0 +1,67 @@
+@model WebBanHang.Models.CheckoutViewModel
+
+@{
+    ViewData["Title"] = "Thanh toán";
+}
+
+<h2 class="mt-4 mb-4">💳 Thanh toán</h2>
+
+<div class="row">
+    <div class="col-md-7">
+        <form asp-action="Checkout" method="post" class="card shadow-sm">
+            <div class="card-body">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                <div class="mb-3">
+                    <label asp-for="CustomerName" class="form-label"></label>
+                    <input asp-for="CustomerName" class="form-control" />
+                    <span asp-validation-for="CustomerName" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="PhoneNumber" class="form-label"></label>
+                    <input asp-for="PhoneNumber" class="form-control" />
+                    <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="ShippingAddress" class="form-label"></label>
+                    <textarea asp-for="ShippingAddress" class="form-control" rows="3"></textarea>
+                    <span asp-validation-for="ShippingAddress" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="PaymentMethod" class="form-label"></label>
+                    <select asp-for="PaymentMethod" class="form-select">
+                        <option value="COD">Thanh toán khi nhận hàng COD</option>
+                        <option value="Banking">Chuyển khoản ngân hàng</option>
+                    </select>
+                    <span asp-validation-for="PaymentMethod" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="Note" class="form-label"></label>
+                    <textarea asp-for="Note" class="form-control" rows="2"></textarea>
+                </div>
+
+                <input asp-for="TotalAmount" type="hidden" />
+
+                <button type="submit" class="btn btn-success w-100 fw-bold">Xác nhận đặt hàng</button>
+            </div>
+        </form>
+    </div>
+
+    <div class="col-md-5 mt-3 mt-md-0">
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <h5 class="fw-bold">Tổng thanh toán</h5>
+                <h3 class="text-brand fw-bold">@Model.TotalAmount.ToString("#,##0") VNĐ</h3>
+                <p class="text-muted mb-0">Sau khi xác nhận, đơn hàng sẽ được lưu vào CSDL.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

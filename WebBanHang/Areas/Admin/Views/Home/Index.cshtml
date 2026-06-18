@@ -1,0 +1,90 @@
+@{
+    ViewData["Title"] = "Trang quản trị";
+}
+
+<div class="container py-4 admin-dashboard">
+    <h2 class="mb-3">Trang quản trị Admin</h2>
+
+    <p class="text-muted mb-4">
+        Chỉ tài khoản Admin mới truy cập được trang này.
+    </p>
+
+    <div class="row g-4">
+        <div class="col-md-4">
+            <div class="card admin-card h-100 shadow-sm">
+                <div class="card-body d-flex flex-column">
+                    <h4 class="card-title">Quản lý sản phẩm</h4>
+                    <p class="card-text text-muted flex-grow-1">
+                        Thêm, sửa, xóa sản phẩm.
+                    </p>
+                    <a asp-area="Admin"
+                       asp-controller="Product"
+                       asp-action="Index"
+                       class="btn btn-primary mt-auto">
+                        Vào quản lý sản phẩm
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card admin-card h-100 shadow-sm">
+                <div class="card-body d-flex flex-column">
+                    <h4 class="card-title">Quản lý danh mục</h4>
+                    <p class="card-text text-muted flex-grow-1">
+                        Thêm, sửa, xóa danh mục sản phẩm.
+                    </p>
+                    <a asp-area="Admin"
+                       asp-controller="Category"
+                       asp-action="Index"
+                       class="btn btn-success mt-auto">
+                        Vào quản lý danh mục
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card admin-card h-100 shadow-sm">
+                <div class="card-body d-flex flex-column">
+                    <h4 class="card-title">Quản lý đơn hàng</h4>
+                    <p class="card-text text-muted flex-grow-1">
+                        Xem đơn hàng và cập nhật trạng thái.
+                    </p>
+                    <a asp-area="Admin"
+                       asp-controller="Order"
+                       asp-action="Index"
+                       class="btn btn-warning mt-auto">
+                        Vào quản lý đơn hàng
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .admin-dashboard {
+        min-height: 500px;
+        margin-bottom: 80px;
+    }
+
+    .admin-card {
+        border-radius: 12px;
+        min-height: 220px;
+    }
+
+    .admin-card .card-body {
+        padding: 24px;
+    }
+
+    .admin-card .card-title {
+        font-weight: 700;
+        margin-bottom: 12px;
+    }
+
+    .admin-card .btn {
+        width: 100%;
+        font-weight: 600;
+    }
+</style>

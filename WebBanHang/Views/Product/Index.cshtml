@@ -1,0 +1,59 @@
+@model IEnumerable<WebBanHang.Models.Product>
+@using WebBanHang.Models
+
+@{
+    ViewData["Title"] = "Sản phẩm";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h3 class="text-uppercase fw-bold m-0 text-brand">Sản phẩm nổi bật</h3>
+    @if (User.IsInRole(SD.Role_Admin))
+    {
+        <a asp-action="Add" class="btn btn-brand shadow-sm fw-bold"><i class="fa-solid fa-plus"></i> Thêm sản phẩm</a>
+    }
+</div>
+
+<div class="row row-cols-2 row-cols-md-3 row-cols-lg-4 g-4">
+    @foreach (var item in Model)
+    {
+        <div class="col">
+            <div class="card h-100 shadow-sm border-0 position-relative" style="border-radius: 12px; overflow: hidden; transition: transform 0.2s;">
+                <div class="text-center pt-3">
+                    @if (!string.IsNullOrEmpty(item.ImageUrl))
+                    {
+                        <img src="@item.ImageUrl" class="card-img-top" alt="@item.Name" style="height: 160px; object-fit: contain;">
+                    }
+                    else
+                    {
+                        <img src="https://via.placeholder.com/160?text=No+Image" class="card-img-top" alt="Trống" style="height: 160px; object-fit: contain;">
+                    }
+                </div>
+
+                <div class="card-body d-flex flex-column">
+                    <h6 class="card-title fw-bold" style="display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; font-size: 14px;">
+                        @item.Name
+                    </h6>
+
+                    <p class="card-text fw-bold mb-3 text-brand" style="font-size: 16px;">
+                        @item.Price.ToString("#,##0") ₫
+                    </p>
+
+                    <div class="mt-auto d-flex flex-column gap-2">
+                        <a asp-controller="Cart" asp-action="AddToCart" asp-route-id="@item.Id" class="btn btn-brand w-100 fw-bold" style="border-radius: 6px;">
+                            Thêm vào giỏ
+                        </a>
+                        <a asp-action="Display" asp-route-id="@item.Id" class="btn btn-sm btn-outline-primary w-100">Chi tiết</a>
+
+                        @if (User.IsInRole(SD.Role_Admin))
+                        {
+                            <div class="d-flex justify-content-between">
+                                <a asp-action="Update" asp-route-id="@item.Id" class="btn btn-sm btn-outline-secondary w-50 me-1">Sửa</a>
+                                <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-sm btn-outline-danger w-50 ms-1">Xóa</a>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>
